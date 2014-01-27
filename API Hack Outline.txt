@@ -1,0 +1,34 @@
+Populates screen with popular pictures
+	OR
+	Search box prompting for a "#tag" to search for pictures by
+
+User is presented with a stream of pictures. 
+
+Clicking on one brings up the picture along with associated information
+
+User can select "FIND IT NEAR ME"
+
+Make call to API to find pictures with any of the #tags within a certain geographical radius
+	OR
+	only allow for searching of pictures that already have a geographical place associated and cross reference that with foursquare for similar places nearby
+
+---------------------------
+User selects location on google map
+
+coordinates are taken from google map api and entered into four square api
+
+returns map of x miles radius with number of recen check ins
+
+FOURSQUARE
+Owner
+Tracy Huynh
+Client id
+DBDWTOGMYNPAJUL3Z3RHQCEQM5GQOEN0I5FOM43MQJYC2NHT
+Client secret
+S0P34PETVGFCGVVUWIDSM2TYKQOA34TJ5KJMDOCD2EPME4NJ
+
+INSTAGRAM
+CLIENT ID	367f129512724dabba9368ca50d234b1
+CLIENT SECRET	3fd6d764bd6f4008a4ecafa6db8d321e
+WEBSITE URL	https://teeracy.github.io/ShoppingList/index.html
+REDIRECT URI	http://teeracy.github.io/APIHack/index.html
