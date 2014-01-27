@@ -1,13 +1,16 @@
 // pull latitude and logitude
 // add in error and options later
 // add in functionality for postal codes
-$('button').on('click', function() {
-    navigator.geolocation.getCurrentPosition(function(data) {
-    var lat = position.coords.latitude;
-    var lng = position.coords.latitude;
-    console.log(lat)
-    });
-});
+
+// $('button').on('click', function() {
+//     navigator.geolocation.getCurrentPosition(function(data) {
+//     var lat = position.coords.latitude;
+//     var lng = position.coords.latitude;
+//     console.log(lat)
+//     });
+// });
+var lat = 29.7568;
+var lng = -95.392778;
 
 // instagram configuration
 var configInstagram = {
@@ -25,11 +28,11 @@ var configFoursquare = {
     apiUrl: 'https://api.foursquare.com/'
   };
 
-// // query instagram API for photos nearby
-// $.getJSON(configInstagram.apiURL + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID, function(data) {
-// 	localPictures = 
-//     // filter for photos that only have location names
-// });
+// query instagram API for photos nearby
+$.getJSON(configInstagram.apiURL + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID, function(data) {
+	localPictures = 
+    // filter for photos that only have location names
+});
 
 
 // // take selected photo's lat, lng, and location name
