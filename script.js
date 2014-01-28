@@ -1,7 +1,6 @@
 // pull latitude and logitude
 // add in error and options later
-// add in functionality for postal codes
-// document.on('click', 'button', function(position))
+    //sample case
 $(document).ready(function() {
     $('button').on('click', function() {
         console.log('hi');
@@ -13,8 +12,8 @@ $(document).ready(function() {
         });
     });
 });
-// var lat = 29.7568;
-// var lng = -95.392778;
+// var lat = 29.7600391;
+// var lng = -95.3900965;
 
 // instagram configuration
 var configInstagram = {
@@ -33,15 +32,15 @@ var configFoursquare = {
   };
 
 // query instagram API for photos nearby
-// $.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
-//     console.log(data)
-//     for (var i = 0; i < data.data.length; i++) {
-//         if ('image' == data.data[i]['type']) {
-//             console.log(data.data[i].location.name)
-//         }
-//     }
-//     // var d = data.data
-// });
+$.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
+    console.log(data)
+    for (var i = 0; i < data.data.length; i++) {
+        if ('image' == data.data[i]['type']) {
+            console.log(data.data[i].location.name)
+        }
+    }
+    // var d = data.data
+});
 
 // $('img').on('click', function() {
 //     pull lat, lng, and location name from object
