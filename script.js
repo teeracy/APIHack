@@ -1,16 +1,20 @@
 // pull latitude and logitude
 // add in error and options later
 // add in functionality for postal codes
-
-// $('button').on('click', function() {
-//     navigator.geolocation.getCurrentPosition(function(data) {
-//     var lat = position.coords.latitude;
-//     var lng = position.coords.latitude;
-//     console.log(lat)
-//     });
-// });
-var lat = 29.7568;
-var lng = -95.392778;
+// document.on('click', 'button', function(position))
+$(document).ready(function() {
+    $('button').on('click', function() {
+        console.log('hi');
+        navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        console.log(lat);
+        console.log(lng);
+        });
+    });
+});
+// var lat = 29.7568;
+// var lng = -95.392778;
 
 // instagram configuration
 var configInstagram = {
@@ -29,20 +33,18 @@ var configFoursquare = {
   };
 
 // query instagram API for photos nearby
-$.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
-    console.log(data)
-    for (var i = 0; i < data.length(); i++) {
-        if ('image' == data[i]['type']) {
-            console.log(data.location.name)
-        }
-    }
-    
+// $.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
+//     console.log(data)
+//     for (var i = 0; i < data.data.length; i++) {
+//         if ('image' == data.data[i]['type']) {
+//             console.log(data.data[i].location.name)
+//         }
+//     }
+//     // var d = data.data
+// });
 
-    // filter for only photos and only photos with locations
-});
-
-// $('img').on('click', this, function() {
-    // pull lat, lng, and location name from object
+// $('img').on('click', function() {
+//     pull lat, lng, and location name from object
 // });
 
 // // query foursquare API for location ID using lat, lng, and location name
