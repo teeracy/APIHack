@@ -1,20 +1,3 @@
-// pull latitude and logitude
-// add in error and options later
-    //sample case
-$(document).ready(function() {
-    $('button').on('click', function() {
-        console.log('hi');
-        navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        console.log(lat);
-        console.log(lng);
-        });
-    });
-});
-// var lat = 29.7600391;
-// var lng = -95.3900965;
-
 // instagram configuration
 var configInstagram = {
     clientID: '367f129512724dabba9368ca50d234b1',
@@ -30,6 +13,22 @@ var configFoursquare = {
     authUrl: 'https://foursquare.com/',
     apiUrl: 'https://api.foursquare.com/'
   };
+
+// pull latitude and logitude
+// add in error and options later
+    //sample case
+$(document).ready(function() {
+    $('button').on('click', function() {
+        console.log('hi');
+        navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        console.log(lat);
+        console.log(lng);
+        });
+    });
+// var lat = 29.7600391;
+// var lng = -95.3900965;
 
 // query instagram API for photos nearby
 $.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
@@ -56,3 +55,4 @@ $.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng 
 //     venues = data['response']['photos']['items']['venue']['name'];
 // });
 
+});
