@@ -29,26 +29,29 @@ var configFoursquare = {
   };
 
 // query instagram API for photos nearby
-$.getJSON(configInstagram.apiURL + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID, function(data) {
-	localPictures = 
-    // filter for photos that only have location names
+$.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
+    console.log(data)
+    for (var i = 0; i < data.length(); i++) {
+        if ('image' == data[i]['type']) {
+            console.log(data.location.name)
+        }
+    }
+    
+
+    // filter for only photos and only photos with locations
 });
 
-
-// // take selected photo's lat, lng, and location name
 // $('img').on('click', this, function() {
-
+    // pull lat, lng, and location name from object
 // });
 
-// // query foursquare API for location ID using lat, lng, and location name for similar venues
+// // query foursquare API for location ID using lat, lng, and location name
 // $.getJSON(configFoursquare.apiURL + 'v2/venues/explore?ll=' + lat + ',' + lng + '&query=' + query + '&client_id=' + configInstagram.clientID, function(data) {
 //     venueID = data['response']['groups'][0]['items']['venue']['id'];
 // });
 
 // // query foursquare API for photos of similar locations using venueID
-// // HOW DO I ACCESS PHOTOS?
 // $.getJSON(configFoursquare.apiURL + 'v2/venues/' + venueID + '/photos' + '&client_id=' + configInstagram.clientID, function(data) {
 //     venues = data['response']['photos']['items']['venue']['name'];
 // });
 
-// https://api.instagram.com/v1/media/3?&clien_id=367f129512724dabba9368ca50d234b1
