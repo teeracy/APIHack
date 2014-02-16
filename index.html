@@ -3,11 +3,23 @@
 <head>
 	<title>Where To</title>
 	<link rel="stylesheet" type="text/css" href="main.css"/>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGkDl-xtTxIy8rIAwQ-5snEWzNn-_LYIE&sensor=true"></script>
 	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="map.js"></script> 
 	<script type="text/javascript" src="script.js"></script>
+
 </head>
 <body>
-	<button type="button">What Else?</button>
+<div id="container">
+	<div class="side" id="nearby_pictures">
+		<header>Venues Near You</header>
+	</div>
+	<div id="map"></div>
+	<div class="side" id="similar_pictures">
+		<header>Similar Venues</header>
+		<h1>Select a venue on the left to see similar venues!</h1>
+	</div>
+</div>
 </body>
 </html>
 

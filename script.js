@@ -1,59 +1,101 @@
-// instagram configuration
-var configInstagram = {
-    clientID: '367f129512724dabba9368ca50d234b1',
-    clientSecret: '3fd6d764bd6f4008a4ecafa6db8d321e',
-    authUrl: 'https://instagram.com/',
-    apiUrl: 'https://api.instagram.com/'
-  };
-
 // foursquare configuration
 var configFoursquare = {
     clientID: 'DBDWTOGMYNPAJUL3Z3RHQCEQM5GQOEN0I5FOM43MQJYC2NHT',
     clientSecret: 'S0P34PETVGFCGVVUWIDSM2TYKQOA34TJ5KJMDOCD2EPME4NJ',
     authUrl: 'https://foursquare.com/',
-    apiUrl: 'https://api.foursquare.com/'
-  };
+    apiUrl: 'https://api.foursquare.com/',
+    version: '20140208'
+};
 
-// pull latitude and logitude
-// add in error and options later
-    //sample case
-$(document).ready(function() {
-    $('button').on('click', function() {
-        console.log('hi');
-        navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+var lat = null;
+var lng = null;
+nearbyVenues = [];
+
+$(function() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
         console.log(lat);
         console.log(lng);
-        });
-    
-// var lat = 29.7600391;
-// var lng = -95.3900965;
-
-// query instagram API for photos nearby
-        $.getJSON(configInstagram.apiUrl + 'v1/media/search?lat=' + lat + '&lng=' + lng + '&client_id=' + configInstagram.clientID + '&callback=?', function(data) {
-            console.log(data)
-            for (var i = 0; i < data.data.length; i++) {
-                if ('image' == data.data[i]['type']) {
-                console.log(data.data[i].location.name)
+        //query for local venues
+        $.getJSON(configFoursquare.apiUrl + 'v2/venues/explore?ll=' + lat + ',' + lng + '&venuePhotos=1&sortByDistance=1&limit=50&client_id=' + configFoursquare.clientID + '&client_secret=' + configFoursquare.clientSecret + '&v=' + configFoursquare.version, function(data) {
+            console.log(data);
+            var items = data.response.groups[0].items;
+            //loops through number of response
+            for (var i = 0; i < items.length; i++) {
+                //sorts out only response with photos
+                if (items[i].venue.photos.groups.length > 0) {
+                    //creates array of objects with relavent nearby venues
+                    nearbyVenues.push(new NearbyVenue(items[i].venue));
                 }
             }
-    // var d = data.data
-        });
+            //runs through array length
+            for (var i = 0; i < nearbyVenues.length; i++) {
+                //appends picture to left-hand bar
+                $('#nearby_pictures').append('<a data-id="' + i + '"><img class="photo" src= "' + nearbyVenues[i].photo + '"//> <div class="store_type">' + nearbyVenues[i].name + '<br>' + nearbyVenues[i].type + '</div></a>')
+                //plots markers for nearby venues
+                var myLatlng = new google.maps.LatLng(nearbyVenues[i].lat ,nearbyVenues[i].lng);
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: nearbyVenues[i].name
+                });
+            }
+
+            //lets user select photo
+            $('a').on('click', function() {
+                $('h1').hide();
+                $('#similar_pictures').html('<header>Similar Venues</header>');
+                //resets array of similar values
+                var similar = [];
+                //grabs data associated with photo
+                i = $(this).data('id');
+                //queries for similar venues
+                $.getJSON(configFoursquare.apiUrl + 'v2/venues/' + nearbyVenues[i].id + '/similar?client_id=' + configFoursquare.clientID + '&client_secret=' + configFoursquare.clientSecret + '&v=' + configFoursquare.version, function(data) {
+                    var items = data.response.similarVenues.items;
+                    console.log(data);
+                    //loops through number of similar venue responses (should be 5)
+                    for (var i = 0; i < items.length; i++) {
+                        //queries for information on each venue
+                        $.getJSON(configFoursquare.apiUrl + 'v2/venues/' + items[i].id + '?venuePhotos=1&client_id=' + configFoursquare.clientID + '&client_secret=' + configFoursquare.clientSecret + '&v=' + configFoursquare.version, function(data) {
+                            console.log(data);
+                            var venue = data.response.venue;
+                            //sorts out only response with photos
+                            if (venue.photos.groups.length > 0) {
+                                //creates array of objects with relavent nearby venues
+                                similar.push(new SimilarVenue(venue));
+                            }
+                            //runs through array length
+                            for (var i = 0; i < similar.length; i++) {
+                                console.log('Hi')
+                                //appends picture to left-hand bar
+                                $('#similar_pictures').append('<a data-id="' + i + '" href="' + similar[i].shortURL + '""><img  class="photo" src= "' + similar[i].photo + '"//> <div class="store_type">' + similar[i].name + '</div></a>')
+                            }
+                        });
+                    };
+                });
+            });
+        });  
     });
-
-// $('img').on('click', function() {
-//     pull lat, lng, and location name from object
-// });
-
-// // query foursquare API for location ID using lat, lng, and location name
-// $.getJSON(configFoursquare.apiURL + 'v2/venues/explore?ll=' + lat + ',' + lng + '&query=' + query + '&client_id=' + configInstagram.clientID, function(data) {
-//     venueID = data['response']['groups'][0]['items']['venue']['id'];
-// });
-
-// // query foursquare API for photos of similar locations using venueID
-// $.getJSON(configFoursquare.apiURL + 'v2/venues/' + venueID + '/photos' + '&client_id=' + configInstagram.clientID, function(data) {
-//     venues = data['response']['photos']['items']['venue']['name'];
-// });
-
 });
+
+
+function NearbyVenue (venue) {
+    this.lat = venue.location.lat;
+    this.lng = venue.location.lng;
+    this.type = venue.categories[0].shortName;
+    this.name = venue.name;
+    this.id = venue.id;
+    this.photo = venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix;
+}
+
+function SimilarVenue (venue) {
+    this.url = "https://" + venue.shortURL;
+    this.id = venue.id;
+    this.name = venue.name;
+    this.lat = venue.location.lat;
+    this.lng = venue.location.lng;
+    this.photo = venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix;
+}
+    
+
