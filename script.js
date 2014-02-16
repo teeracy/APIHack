@@ -47,7 +47,7 @@ $(function() {
                 $('h1').hide();
                 $('#similar_pictures').html('<header>Similar Venues</header>');
                 //resets array of similar values
-                var similar = [];
+                // var similar = [];
                 //grabs data associated with photo
                 i = $(this).data('id');
                 //queries for similar venues
@@ -63,16 +63,20 @@ $(function() {
                             //sorts out only response with photos
                             if (venue.photos.groups.length > 0) {
                                 //creates array of objects with relavent nearby venues
-                                similar.push(new SimilarVenue(venue));
-                            }
-                            //runs through array length
-                            for (var i = 0; i < similar.length; i++) {
-                                console.log('Hi')
+                                // similar.push(new SimilarVenue(venue))
                                 //appends picture to left-hand bar
-                                $('#similar_pictures').append('<a data-id="' + i + '" href="' + similar[i].shortURL + '""><img  class="photo" src= "' + similar[i].photo + '"//> <div class="store_type">' + similar[i].name + '</div></a>')
+                                $('#similar_pictures').append('<a data-id="' + i + '" href="' + "https://" + venue.shortURL + '""><img  class="photo" src= "' + venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix + 'target="_blank"//> <div class="store_type">' + venue.name + '</div></a>')
                             }
                         });
                     };
+                    // setTimeout(function() {
+                    //         //runs through array length
+                    //         for (var i = 0; i < similar.length; i++) {
+                    //             console.log('Hi')
+                    //             //appends picture to left-hand bar
+                    //             $('#similar_pictures').append('<a data-id="' + i + '" href="' + similar[i].shortURL + '""><img  class="photo" src= "' + similar[i].photo + '"//> <div class="store_type">' + similar[i].name + '</div></a>')
+                    //         }
+                    // }, 2000);
                 });
             });
         });  
