@@ -60,13 +60,12 @@ $(function() {
                         $.getJSON(configFoursquare.apiUrl + 'v2/venues/' + items[i].id + '?venuePhotos=1&client_id=' + configFoursquare.clientID + '&client_secret=' + configFoursquare.clientSecret + '&v=' + configFoursquare.version, function(data) {
                             console.log(data);
                             var venue = data.response.venue;
-                            console.log(venue)
                             //sorts out only response with photos
                             if (venue.photos.groups.length > 0) {
                                 //creates array of objects with relavent nearby venues
                                 // similar.push(new SimilarVenue(venue))
                                 //appends picture to left-hand bar
-                                $('#similar_pictures').append('<a data-id="' + i + '" href=' + venue.shortURL + '><img  class="photo" src= "' + venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix + '"//> <div class="store_type">' + venue.name + '</div></a>')
+                                $('#similar_pictures').append('<a data-id="' + i + '" href=' + venue.shortUrl + '><img  class="photo" src= "' + venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix + '"//> <div class="store_type">' + venue.name + '</div></a>')
                             }
                         });
                     };
