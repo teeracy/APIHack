@@ -65,7 +65,7 @@ $(function() {
                                 //creates array of objects with relavent nearby venues
                                 // similar.push(new SimilarVenue(venue))
                                 //appends picture to left-hand bar
-                                $('#similar_pictures').append('<a data-id="' + i + '" href="' + "https://" + venue.shortURL + '""><img  class="photo" src= "' + venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix + '"//> <div class="store_type">' + venue.name + '</div></a>')
+                                $('#similar_pictures').append('<a data-id="' + i + '" href="' + venue.shortURL + '"><img  class="photo" src= "' + venue.photos.groups[0].items[0].prefix + 'width250' + venue.photos.groups[0].items[0].suffix + '"//> <div class="store_type">' + venue.name + '</div></a>')
                             }
                         });
                     };
