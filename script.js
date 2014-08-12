@@ -60,6 +60,7 @@ $(function() {
                         $.getJSON(configFoursquare.apiUrl + 'v2/venues/' + items[i].id + '?venuePhotos=1&client_id=' + configFoursquare.clientID + '&client_secret=' + configFoursquare.clientSecret + '&v=' + configFoursquare.version, function(data) {
                             console.log(data);
                             var venue = data.response.venue;
+                            console.log(venue)
                             //sorts out only response with photos
                             if (venue.photos.groups.length > 0) {
                                 //creates array of objects with relavent nearby venues
